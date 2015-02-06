@@ -1,0 +1,44 @@
+[
+    {
+        "item": "150mm Railgun II",
+        "runs": 40,
+        "materials": [
+            {
+                "name": "Mat 1",
+                "required": 200,
+                "stocked": 300
+            },
+            {
+                "name": "Mat 2",
+                "required": 225,
+                "stocked": 125
+            },
+            {
+                "name": "Mat 3",
+                "required": 500,
+                "stocked": 20
+            }
+        ]
+    },
+    {
+        "item": "125mm Railgun II",
+        "runs": 200,
+        "materials": [
+            {
+                "name": "Mat 4",
+                "required": 200,
+                "stocked": 300
+            },
+            {
+                "name": "Mat 1",
+                "required": 225,
+                "stocked": 125
+            },
+            {
+                "name": "Mat 2",
+                "required": 500,
+                "stocked": 20
+            }
+        ]
+    }
+]

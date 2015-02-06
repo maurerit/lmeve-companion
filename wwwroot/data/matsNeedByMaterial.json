@@ -1,0 +1,101 @@
+[
+    {
+        "id": 1234,
+        "name": "Mat 1",
+        "needed": 2000,
+        "stocked": 1500,
+        "requiredFor": [
+            {
+                "name": "125mm Railgun II",
+                "runsCompleted": 25,
+                "runsTotal": 200
+            },
+            {
+                "name": "150mm Railgun II",
+                "runsCompleted": 10,
+                "runsTotal": 50
+            },
+            {
+                "name": "250mm Railgun II",
+                "runsCompleted": 10,
+                "runsTotal": 15
+            }
+        ]
+    },
+    {
+        "id": 1235,
+        "name": "Mat 2",
+        "needed": 3000,
+        "stocked": 1750,
+        "requiredFor": [
+            {
+                "name": "125mm Light Autocannon II",
+                "runsCompleted": 25,
+                "runsTotal": 100
+            },
+            {
+                "name": "200mm Autocannon II",
+                "runsCompleted": 75,
+                "runsTotal": 100
+            },
+            {
+                "name": "150mm Light Autocannon II",
+                "runsCompleted": 10,
+                "runsTotal": 100
+            },
+            {
+                "name": "200mm Autocannon II",
+                "runsCompleted": 75,
+                "runsTotal": 100
+            },
+            {
+                "name": "150mm Light Autocannon II",
+                "runsCompleted": 10,
+                "runsTotal": 100
+            }
+        ]
+    },
+    {
+        "id": 1236,
+        "name": "Mat 3",
+        "needed": 5000,
+        "stocked": 6000,
+        "requiredFor": [
+            {
+                "name": "125mm Light Autocannon II",
+                "runsCompleted": 25,
+                "runsTotal": 100
+            },
+            {
+                "name": "200mm Autocannon II",
+                "runsCompleted": 75,
+                "runsTotal": 100
+            },
+            {
+                "name": "150mm Light Autocannon II",
+                "runsCompleted": 10,
+                "runsTotal": 100
+            },
+            {
+                "name": "200mm Autocannon II",
+                "runsCompleted": 75,
+                "runsTotal": 100
+            },
+            {
+                "name": "150mm Light Autocannon II",
+                "runsCompleted": 10,
+                "runsTotal": 100
+            },
+            {
+                "name": "200mm Autocannon II",
+                "runsCompleted": 75,
+                "runsTotal": 100
+            },
+            {
+                "name": "150mm Light Autocannon II",
+                "runsCompleted": 10,
+                "runsTotal": 100
+            }
+        ]
+    }
+]

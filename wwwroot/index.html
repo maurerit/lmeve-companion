@@ -1,0 +1,68 @@
+<!--
+Copyright 2014 maurerit.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!doctype html>
+<html lang="en" ng-app="invTrackerApp">
+    <head>
+        <meta charset="utf-8">
+        <title>LMeve Inventory Tracker</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+        <script src="/js/libs/jquery.min.js"></script>
+        <script src="/js/libs/angular.min.js"></script>
+        <script src="/js/libs/angular-route.min.js"></script>
+        <script src="/js/libs/bootstrap.min.js"></script>
+        <script src="/js/app.js"></script>
+        <script src="/js/controllers.js"></script>
+    </head>
+    <body ng-controller="InventoryListCtrl">
+        <div class="col-md-2">
+            Some text to widen the div
+        </div>
+        <div class="panel panel-default col-md-10">
+            <div class="panel-heading">
+                <h3 class="panel-title">Materials Needed</h3>
+            </div>
+            <ul class="list-group">
+                <li ng-repeat="mat in mats" class="list-group-item">
+                    <a ng-attr-id="{{mat.id}}" onclick="invTrackerApp.openEveMarket(this.id)">{{mat.name}}</a>
+                    <span class="badge">{{mat.needed - mat.stocked}}</span>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-info active" role="progressbar" aria-valuenow="{{mat.stocked}}" aria-valuemin="0" aria-valuemax="{{mat.needed}}" style="width: {{(mat.stocked / mat.needed) * 100}}%">
+                            <span class="sr-only">{{(mat.stocked / mat.needed) * 100}} Stocked</span>
+                        </div>
+                    </div>
+                    <button onclick="invTrackerApp.onExpanderClick(this)" ng-attr-id="{{'expander-' + mat.id}}" type="button" class="btn btn-info btn-sm">
+                        Show Items <span class="badge">{{mat.requiredFor.length}}</span><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                    </button>
+                    <ul ng-attr-id="{{'sublist-' + mat.id}}" class="list-group collapse collapsable">
+                        <li ng-repeat="required in mat.requiredFor" class="list-group-item">
+                            <span>{{required.name}}</span>
+                            <span class="badge pull-right">{{required.runsTotal}}</span>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success active" role="progressbar" aria-valuenow="{{required.runsCompleted}}" aria-valuemin="0" aria-valuemax="{{required.runsTotal}}" style="width: {{(required.runsCompleted/required.runsTotal) * 100}}%">
+                                    <span class="sr-only">{{(mat.stocked / mat.needed) * 100}} Stocked</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div>
+            Should be below the data.
+        </div>
+    </body>
+</html>
