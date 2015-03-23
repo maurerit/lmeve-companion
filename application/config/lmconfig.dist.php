@@ -65,9 +65,11 @@ $EC_PRICE_TO_USE_FOR_SELL = array('type' => 'sell', 'price' => 'min');
 $LMEVE_LINK = '<your lmeve absolute url>';
 
 $LM_PAGES = array(
-    0 => array('path' => '/matsrequired.html', 'name' => 'matsrequired', 'displayName' => 'Materials Required', 'rootPerm' => 'ViewMatsRequired'),
-    1 => array('path' => '/queue.html', 'name' => 'queue', 'displayName' => 'Corporate Queue', 'rootPerm' => 'ViewQueue'),
-    2 => array('path' => '/metrics.html', 'name' => 'metrics', 'displayName' => 'Financials', 'rootPerm' => 'ViewMetrics')
+    0 => array('path' => '/alltasks.html', 'name' => 'alltasks', 'displayName' => 'All Tasks', 'rootPerm' => 'ViewAllTasks'),
+    1 => array('path' => '/tasks.html', 'name' => 'tasks', 'displayName' => 'Tasks', 'rootPerm' => 'ViewOwnTasks'),
+    2 => array('path' => '/matsrequired.html', 'name' => 'matsrequired', 'displayName' => 'Materials Required', 'rootPerm' => 'ViewMatsRequired'),
+    3 => array('path' => '/queue.html', 'name' => 'queue', 'displayName' => 'Corporate Queue', 'rootPerm' => 'ViewQueue'),
+    4 => array('path' => '/metrics.html', 'name' => 'metrics', 'displayName' => 'Financials', 'rootPerm' => 'ViewMetrics')
 );
 
 /* * ************************************************************************************************************************************
