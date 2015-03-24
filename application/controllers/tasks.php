@@ -21,6 +21,16 @@
  *
  * @author maurerit
  */
-class tasks {
-    //put your code here
+class tasks extends LMeve_Controller {
+    public function __construct ( ) {
+        parent::__construct();
+    }
+
+    public function index ( ) {
+        
+    }
+    
+    public function getName ( ) {
+        return 'tasks';
+    }
 }

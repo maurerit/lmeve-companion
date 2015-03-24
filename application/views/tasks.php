@@ -1,6 +1,6 @@
 <?php
 
-/*
+/* 
  * Copyright 2015 maurerit.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,21 +16,3 @@
  * limitations under the License.
  */
 
-/**
- * Description of alltasks
- *
- * @author maurerit
- */
-class alltasks extends LMeve_Controller {
-    public function __construct ( ) {
-        parent::__construct();
-    }
-    
-    public function index ( ) {
-        
-    }
-    
-    public function getName ( ) {
-        return 'alltasks';
-    }
-}
