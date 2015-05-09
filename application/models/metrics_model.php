@@ -24,6 +24,37 @@
 class Metrics_model extends CI_Model {
     public function __construct() {
         parent::__construct();
+        $this->load->model('tasks_model');
+        $this->load->model('general_model');
+    }
+
+    public function getLiquidIsk ( $year, $month ) {
+        $corps = $this->general_model->getAllCorps();
+        $iskPerPoint = $this->general_model->getIskPerPoint();
+        $points = $this->tasks_model->getAllPoints();
+        $totalWages = 0.0;
+
+        foreach($corps as $corp) {
+            $rearrange = $this->tasks_model->getAllWagesByActivity($iskPerPoint, $corp->corporationID, $year, $month);
+
+            foreach($rearrange as $row) {
+                $totalWages += stripslashes($row['wage']);
+            }
+        }
+
+        return $totalWages;
+    }
+
+    public function getInventoryValues ( ) {
+        echo 'getInventoryValues'.PHP_EOL;
+    }
+
+    public function getRunningJobs ( ) {
+        echo 'getRunningJobs'.PHP_EOL;
+    }
+
+    public function getRevenue ( ) {
+        echo 'getRevenue'.PHP_EOL;
     }
 }
 

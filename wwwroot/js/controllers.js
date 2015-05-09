@@ -38,11 +38,12 @@ invTrackerApp.controller('InventoryListCtrl', ['$scope', '$http', 'dialogs', fun
     };
 
     $scope.addToBuyList = function ( mat ) {
-        var dlg = dialogs.create('/addToBuyList.html','buyListController',{},'lg');
+        var dlg = dialogs.create('/addToBuyList.html','buyListController',mat,'lg');
     };
 }])
-.controller('buyListController', function($scope, $modalInstance,data) {
+.controller('buyListController', function($scope, $modalInstance, data) {
     $scope.number = 0;
+    $scope.data = data;
 
     $scope.cancel = function ( ) {
         $modalInstance.dismiss('Cancelled');

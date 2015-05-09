@@ -23,6 +23,7 @@ limitations under the License.
         <link rel="stylesheet" href="/js/libs/dialogs/4.2.0/min.css">
         <link rel="stylesheet" href="/js/libs/angucomplete/angucomplete.css">
         <link rel="stylesheet" href="/css/app.css">
+        <link rel="stylesheet" href="/js/libs/bootstrap-slider/4.5.0/min.css">
         <script src="/js/libs/jquery.min.js"></script>
         <!--<script src="/js/libs/angular.min.js"></script>
         <script src="/js/libs/angular-route.min.js"></script>-->
@@ -33,6 +34,7 @@ limitations under the License.
         <script src="/js/libs/ui-bootstrap/0.12/min.js"></script>
         <script src="/js/libs/dialogs/4.2.0/full.js"></script>
         <script src="/js/libs/angucomplete/angucomplete.js"></script>
+        <script src="/js/libs/bootstrap-slider/4.5.0/min.js"></script>
         <script src="/js/app-angular.js"></script>
         <script src="/js/controllers.js"></script>
     </head>

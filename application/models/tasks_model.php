@@ -61,6 +61,6 @@ class Tasks_model extends CI_Model {
     }
 
     public function getWorkersForTypeID ( $typeID, $year, $month ) {
-        
+
     }
 }

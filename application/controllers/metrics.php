@@ -21,14 +21,25 @@
  *
  * @author maurerit
  */
-class Metrics extends LMeve_Controller {
+class Metrics extends CI_Controller {
     function __construct ( ) {
         parent::__construct();
         $this->load->model('metrics_model');
     }
 
     public function index() {
-        $this->template->load('layout', 'metrics', $this->data);
+
+    }
+
+    public function gather ( ) {
+        if ( !$this->input->is_cli_request() ) {
+            die;
+        }
+        $inventoryValues = $this->metrics_model->getInventoryValues();
+        $runningJobs = $this->metrics_model->getRunningJobs();
+        $revenue = $this->metrics_model->getRevenue();
+        $liquidIsk = $this->metrics_model->getLiquidIsk(date('Y'), date('m'));
+        echo $liquidIsk .PHP_EOL;
     }
 
     public function getName() {

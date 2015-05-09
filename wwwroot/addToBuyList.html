@@ -17,10 +17,17 @@ limitations under the License.
     seems to make the whole modal dissappear :(.  Not sure why as I'm a UI newb -->
 <!--<div class="modal">
     <div class="modal-dialog">-->
+<script>
+    $('#tbs').slider({
+        formatter: function(value) {
+            return 'Current value: ' + value;
+        }
+    });
+</script>
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">
-                        <span class="glyphicon glyphicon-star"></span> User's Name
+                        <span class="glyphicon glyphicon-star"></span> {{data.name}}
                 </h4>
             </div>
             <div class="modal-body">
@@ -28,7 +35,7 @@ limitations under the License.
                     <div class="form-group input-group-lg" ng-class="{true: 'has-error'}[nameDialog.username.$dirty && nameDialog.username.$invalid]">
                         <label class="control-label" for="username">Name:</label>
                         <input type="text" class="form-control" name="username" id="username" ng-model="user.name" ng-keyup="hitEnter($event)" required>
-                        <span class="help-block">Enter your full name, first &amp; last.</span>
+                        <input type="text" data-slider-id="toBuySlider" id="tbs" data-slider-min="0" data-slider-max="250000" data-slider-step="1" data-slider-value="0"/>
                     </div>
                 </ng-form>
             </div>

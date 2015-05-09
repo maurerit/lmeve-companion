@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2014 maurerit.
+ * Copyright 2015 maurerit.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,28 +17,21 @@
  */
 
 /**
- * Description of buylist
+ * Description of buylist_model
  *
  * @author maurerit
  */
-class Buylist extends LMeve_Controller {
-    function __construct ( ) {
+class Buylist_model extends CI_Model {
+    public function __construct() {
         parent::__construct();
-        $this->load->model('buylist_model');
+        $this->load->config('lmconfig');
     }
 
-    public function addToCart ( $typeID, $quantity ) {
-        $buylistId = 0;         //TODO: Get buylist id from session
-        $currentPrice = 0.00;   //TODO: get current price from materials_model
-        $this->buylist_model->addToBuyList($buylistId, $typeID, $quantity, $currentPrice);
-    }
-
-    public function showBuylist ( ) {
-
-    }
-
-    public function getName() {
-        return 'buylist';
+    public function addToBuyList ( $buylistId, $typeID, $quantity, $quotedPrice ) {
+        $this->db->trans_start();
+        $data = array($buylistId, $typeID, $quantity, $quotedPrice, 0);
+        $this->db->insert('lmcbuylist',$data);
+        $this->db->trans_complete();
     }
 }
 
