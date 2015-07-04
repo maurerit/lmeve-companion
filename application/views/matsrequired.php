@@ -73,7 +73,7 @@
                     <ul class="list-group">
                         <li ng-repeat="mat in result.mats | filter:query | filter:filterMaterialByProductType |orderBy:orderProp" class="list-group-item">
                             <span>{{mat.name}}</span>
-                            <span class="badge">{{mat.needed - mat.stocked}}</span>
+                            <span class="badge">{{mat.needed | number}} needed / {{mat.stocked || 0 | number}} in stock</span>
                             <div class="progress">
                                 <div class="progress-bar progress-bar-info active" role="progressbar" aria-valuenow="{{mat.stocked}}" aria-valuemin="0" aria-valuemax="{{mat.needed}}" style="width: {{(mat.stocked / mat.needed) * 100}}%">
                                     <span class="sr-only">{{(mat.stocked / mat.needed) * 100}} Stocked</span>

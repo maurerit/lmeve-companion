@@ -92,6 +92,35 @@ class Materials_model extends CI_Model {
         return array_values($mats);
     }
 
+    public function getMatsForSpreadSheetImport ( ) {
+        $tasks = $this->getTasksForSpreadSheet(date('Y'), date('m'));
+        $results = [];
+
+        foreach ( $tasks as $task ) {
+            $runs = $task->runs-$task->runsDone;
+            //TODO: Hmm, was I high when I wrote this?
+            if ($portionSize=$this->getPortionSize($task->typeID)) {
+                $runs = $runs/$portionSize;
+            }
+
+            $taskMats = $this->getBaseMaterials($task->typeID, $runs, null, $task->activityID);
+
+            foreach ( $taskMats as $taskMat ) {
+                $result = new stdClass();
+                $result->character = $task->name;
+                $result->task = $task->activityName;
+                $result->itemType = $taskMat->typeName;
+                $result->runsCompleted = $task->runsDone;
+                $result->totalRuns = $task->runs;
+                $result->quantityNeeded = $taskMat->notperfect;
+
+                array_push($results, $result);
+            }
+        }
+
+        return $results;
+    }
+
     public function getTasksForMaterialsRequired($year, $month) {
         return $this
                         ->db
@@ -115,6 +144,33 @@ class Materials_model extends CI_Model {
                                         GROUP BY lmt.characterID, lmt.typeID, lmt.activityID, lmt.taskID
                                   ) AS b ON a.taskID=b.taskID
                            group by a.typeID, a.activityID
+                           order by a.typeID asc")->result();
+    }
+
+    //TODO: I really don't care if this is c&p'ed from above... lets hack this shit... I'm abandoning it anyway :P
+    public function getTasksForSpreadSheet($year, $month) {
+        return $this
+                        ->db
+                        ->query("SELECT a.name, a.typeName, a.groupName, a.activityName, a.typeID,a.activityID,sum(a.runs) as runs,sum(b.runsDone) as runsDone
+                            FROM (
+                                  SELECT acm.name, grps.groupName, lmt.characterID, itp.typeName, lmt.typeID, rac.activityName, lmt.activityID, lmt.taskID, lmt.runs
+                                    FROM lmtasks lmt
+                                    JOIN apicorpmembers acm ON acm.characterID=lmt.characterID
+                                    JOIN `" . $this->config->item('LM_EVEDB') . "`.invTypes itp ON lmt.typeID=itp.typeID
+                                    JOIN `" . $this->config->item('LM_EVEDB') . "`.ramActivities rac ON lmt.activityID=rac.activityID
+                                    JOIN `" . $this->config->item('LM_EVEDB') . "`.invGroups grps ON itp.groupID = grps.groupID
+                                   WHERE ((singleton=1 AND lmt.taskCreateTimestamp BETWEEN '${year}-${month}-01' AND LAST_DAY('${year}-${month}-01')) OR (singleton=0))
+                                  ) AS a
+                            LEFT JOIN (
+                                       SELECT lmt.taskID, SUM(aij.runs)*itp.portionSize AS runsDone, COUNT(*) AS jobsDone
+                                         FROM lmtasks lmt
+                                         JOIN `" . $this->config->item('LM_EVEDB') . "`.invTypes itp ON lmt.typeID=itp.typeID
+                                         JOIN apiindustryjobs aij ON lmt.typeID=aij.outputTypeID AND lmt.activityID=aij.activityID AND lmt.characterID=aij.installerID
+                                        WHERE beginProductionTime BETWEEN '${year}-${month}-01' AND LAST_DAY('${year}-${month}-01')
+                                          AND ((singleton=1 AND lmt.taskCreateTimestamp BETWEEN '${year}-${month}-01' AND LAST_DAY('${year}-${month}-01')) OR (singleton=0))
+                                        GROUP BY lmt.characterID, lmt.typeID, lmt.activityID, lmt.taskID
+                                  ) AS b ON a.taskID=b.taskID
+                           group by a.typeID, a.activityID, a.name
                            order by a.typeID asc")->result();
     }
 

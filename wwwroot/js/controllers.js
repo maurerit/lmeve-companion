@@ -22,7 +22,7 @@ invTrackerApp.controller('InventoryListCtrl', ['$scope', '$http', 'dialogs', fun
 
     $scope.month = rightNow.getMonth() + 1;
     $scope.year = rightNow.getFullYear();
-    $scope.orderProp = '-needed';
+    $scope.orderProp = 'name';
     $scope.filter = {};
 
     $http.get('/data/matsNeedByMaterial/'+$scope.year+'/'+$scope.month).success(function(data) {

@@ -21,7 +21,7 @@
  *
  * @author maurerit
  */
-class Data extends LMeve_Controller {
+class Data extends CI_Controller {
     function __construct ( ) {
         parent::__construct();
         $this->load->model('materials_model');
@@ -39,6 +39,25 @@ class Data extends LMeve_Controller {
         $this->output
                 ->set_content_type('application/json')
                 ->set_output(json_encode($data));
+    }
+
+    public function matsNeedForSpreadsheet ( ) {
+        $results = $this->materials_model->getMatsForSpreadSheetImport();
+
+        $xml = '<materialsNeeded>';
+
+        foreach ( $results as $row ) {
+            $xml = $xml . '<row character="' . $row->character . '"
+                task="' . $row->task . '" itemType="' . $row->itemType . '"
+                runsCompleted="' . $row->runsCompleted . '" totalRuns="' .
+                $row->totalRuns . '" quantityNeeded="' . $row->quantityNeeded . '" />';
+        }
+
+        $xml = $xml . '</materialsNeeded>';
+
+        $this->output
+                ->set_content_type('application/xml')
+                ->set_output($xml);
     }
 
     public function marketListingSummary ( ) {
