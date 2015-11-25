@@ -110,6 +110,7 @@ class Materials_model extends CI_Model {
                 $result->character = $task->name;
                 $result->task = $task->activityName;
                 $result->itemType = $taskMat->typeName;
+                $result->producedType = $task->typeName;
                 $result->runsCompleted = $task->runsDone;
                 $result->totalRuns = $task->runs;
                 $result->quantityNeeded = ($taskMat->notperfect < 0 ? 0: $taskMat->notperfect);

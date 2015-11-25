@@ -49,7 +49,7 @@ class Data extends CI_Controller {
         foreach ( $results as $row ) {
             $xml = $xml . '<row character="' . $row->character . '"
                 task="' . $row->task . '" itemType="' . $row->itemType . '"
-                runsCompleted="' . $row->runsCompleted . '" totalRuns="' .
+                producedType="' . $row->producedType . '" runsCompleted="' . $row->runsCompleted . '" totalRuns="' .
                 $row->totalRuns . '" quantityNeeded="' . $row->quantityNeeded . '" />';
         }
 
