@@ -60,6 +60,24 @@ class Data extends CI_Controller {
                 ->set_output($xml);
     }
 
+    public function matsForNextMonth ( ) {
+        $results = $this->materials_model->getMatsForNextMonth();
+
+        $xml = '<materialsNeeded>';
+
+        foreach ( $results as $row ) {
+            $xml = $xml . '<row character="' . $row->character . '"
+                task="' . $row->task . '" itemType="' . $row->itemType . '"
+                producedType="' . $row->producedType . '" quantityNeeded="' . $row->quantityNeeded . '" />';
+        }
+
+        $xml = $xml . '</materialsNeeded>';
+
+        $this->output
+                ->set_content_type('application/xml')
+                ->set_output($xml);
+    }
+
     public function marketListingSummary ( ) {
         $data = array();
         $data['marketListings'] = $this->marketlistings_model->getMarketListingSummary();
@@ -76,6 +94,10 @@ class Data extends CI_Controller {
         $this->output
                 ->set_content_type('application/json')
                 ->set_output(json_encode($queueItems));
+    }
+
+    public function memberBases ( ) {
+
     }
 
     private function getTypes ( $mats ) {

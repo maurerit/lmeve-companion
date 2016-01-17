@@ -122,6 +122,38 @@ class Materials_model extends CI_Model {
         return $results;
     }
 
+    public function getMatsForNextMonth ( ) {
+        $date = date('Y-m-d');
+        $tasks = $this->getTasksForMaterialsRequired(date('Y'), date('m', strtotime('+1 month', strtotime($date))));
+
+        $results = [];
+
+        foreach ( $tasks as $task ) {
+            $runs = $task->runs;
+            //TODO: Hmm, was I high when I wrote this?
+            if ($portionSize=$this->getPortionSize($task->typeID)) {
+                $runs = $runs/$portionSize;
+            }
+
+            $taskMats = $this->getBaseMaterials($task->typeID, $runs, null, $task->activityID);
+
+            foreach ( $taskMats as $taskMat ) {
+                $result = new stdClass();
+                $result->character = $task->name;
+                $result->task = $task->activityName;
+                $result->itemType = $taskMat->typeName;
+                $result->producedType = $task->typeName;
+                $result->runsCompleted = $task->runsDone;
+                $result->totalRuns = $task->runs;
+                $result->quantityNeeded = ($taskMat->notperfect < 0 ? 0: $taskMat->notperfect);
+
+                array_push($results, $result);
+            }
+        }
+
+        return $results;
+    }
+
     public function getTasksForMaterialsRequired($year, $month) {
         return $this
                         ->db
