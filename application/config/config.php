@@ -17,6 +17,7 @@ if (!defined('BASEPATH'))
   | path to your installation.
   |
  */
+date_default_timezone_set("Europe/Paris");
 $config['base_url'] = '';
 
 /*

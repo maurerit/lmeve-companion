@@ -29,6 +29,7 @@ class Data extends CI_Controller {
         $this->load->model('queue_model');
         $this->load->model('type_model');
         $this->load->model('tasks_model');
+        $this->load->model('contracts_model');
     }
 
     public function matsNeedByMaterial ($year, $month) {
@@ -39,6 +40,13 @@ class Data extends CI_Controller {
         $this->output
                 ->set_content_type('application/json')
                 ->set_output(json_encode($data));
+    }
+
+    public function contracts ( $lastContractSent ) {
+        $contracts = $this->contracts_model->getContracts($lastContractSent);
+        $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($contracts));
     }
 
     public function matsNeedForSpreadsheet ( ) {

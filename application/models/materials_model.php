@@ -208,16 +208,24 @@ class Materials_model extends CI_Model {
     }
 
     public function getBaseMaterials($typeID, $runs = 1, $melvl_override = null, $activityID = 1) {
+        if ($activityID==8) { //invention materials are now bound to T1 BP, not T2 BP
+            $tmpBPO=$this->getT1BPOforT2BPO($typeID);
+            //echo("<h2>Invention DEBUG</h2><pre>".print_r($tmpBPO,TRUE)."</pre>");
+            $typeID=$tmpBPO->blueprintTypeID;
+        }
+
         $bpo = $this->getBlueprintByProduct($typeID);
         $techLevel = $bpo->techLevel;
 
-        $materials = $this->db->query("SELECT rtr.`requiredTypeID` AS typeID, itp.`typeName`, rtr.`quantity`, rtr.`damagePerJob`, rtr.`recycle`
-        FROM `" . $this->config->item('LM_EVEDB') . "`.`ramTypeRequirements` rtr
+        $typeID = $bpo->blueprintTypeID;
+
+        $materials = $this->db->query("SELECT ybm.`materialTypeID` AS `typeID`, itp.`typeName`, ybm.`quantity`, 0 AS `damagePerJob`, 0 AS `recycle`
+        FROM `" . $this->config->item('LM_EVEDB') . "`.`yamlBlueprintMaterials` ybm
         JOIN `" . $this->config->item('LM_EVEDB') . "`.`invTypes` itp
-        ON rtr.`requiredTypeID` = itp.`typeID`
-        WHERE rtr.`typeID` = $typeID
+        ON ybm.`materialTypeID` = itp.`typeID`
+        WHERE ybm.`blueprintTypeID` = $typeID
         AND `activityID` = $activityID
-        ORDER BY rtr.`requiredTypeID`;")->result();
+        ORDER BY ybm.`materialTypeID`;")->result();
 
         if ($set = $this->getMEPE($typeID)) {
             $melevel = $set->me;
@@ -264,6 +272,29 @@ class Materials_model extends CI_Model {
         //end ME modification
         return $materialsResult;
     }
+
+    /**
+    * Finds typeID of Tech I BPO which produces a base item for Tech II BPO
+    *
+    * @global type $LM_EVEDB - static data dump schema
+    * @param type $typeID - Tech II BPO typeID
+    * @return mixed typeID of Tech I BPO or False if not found
+    */
+   function getT1BPOforT2BPO($typeID) {
+           global $LM_EVEDB;
+           $blueprint=$this->db->query("SELECT t1.* FROM `" . $this->config->item('LM_EVEDB') . "`.`invBlueprintTypes` t1
+                   JOIN `" . $this->config->item('LM_EVEDB') . "`.`invMetaTypes` imt
+                   ON t1.`productTypeID`=imt.`parentTypeID`
+                   JOIN `" . $this->config->item('LM_EVEDB') . "`.`invBlueprintTypes` t2
+                   ON imt.`typeID`=t2.`productTypeID`
+                   WHERE t2.`blueprintTypeID` = $typeID
+                   AND t2.`techLevel`=2;")->result();
+           if (count($blueprint)==1) {
+               return $blueprint[0];
+           } else { //blueprint not found... maybe given typeID is a blueprint itself??
+               return FALSE;
+           }
+   }
 
     /**
      * Finds blueprint typeID for product typeID
