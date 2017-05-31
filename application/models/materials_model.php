@@ -123,13 +123,13 @@ class Materials_model extends CI_Model {
     }
 
     public function getMatsForNextMonth ( ) {
-        $date = date('Y-m-d');
-        $tasks = $this->getTasksForMaterialsRequired(date('Y'), date('m', strtotime('+1 month', strtotime($date))));
+        $date = date('Y-m-01');
+        $tasks = $this->getTasksForSpreadSheet(date('Y'), date('m', strtotime('+1 month', strtotime($date))));
 
         $results = [];
 
         foreach ( $tasks as $task ) {
-            $runs = $task->runs;
+            $runs = $task->runs-$task->runsDone;
             //TODO: Hmm, was I high when I wrote this?
             if ($portionSize=$this->getPortionSize($task->typeID)) {
                 $runs = $runs/$portionSize;
